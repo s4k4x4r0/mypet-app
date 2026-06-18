@@ -104,11 +104,11 @@ export function loadState(now: number): PetState {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return createInitialState(now)
     const saved = JSON.parse(raw) as Partial<PetState>
-    if (typeof saved.satiety !== 'number') return createInitialState(now)
+    if (typeof saved.satiety !== 'number' || typeof saved.energy !== 'number') return createInitialState(now)
     const elapsed = (now - (saved.lastUpdated ?? now)) / 1000
     return { ...advance(saved as PetState, elapsed), lastUpdated: now }
   } catch {
-    return createInitialState(now)
+
   }
 }
 
