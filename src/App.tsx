@@ -1,12 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
-import RabbitSprite from './RabbitSprite.jsx'
-import { loadState, saveState, advance, feed, getMood } from './pet.js'
+import RabbitSprite from './RabbitSprite.tsx'
+import {
+  loadState,
+  saveState,
+  advance,
+  feed,
+  getMood,
+  type PetState,
+} from './pet.ts'
 import './App.css'
 
 export default function App() {
-  const [state, setState] = useState(() => loadState(Date.now()))
+  const [state, setState] = useState<PetState>(() => loadState(Date.now()))
   const [eating, setEating] = useState(false)
-  const eatTimer = useRef(null)
+  const eatTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   // 1秒ごとに時間経過を反映
   useEffect(() => {
@@ -90,19 +97,26 @@ export default function App() {
       >
         🥕 ごはんをあげる
       </button>
-      {state.asleep && (
-        <p className="hint">起きるまで待ってあげてね</p>
-      )}
+      {state.asleep && <p className="hint">起きるまで待ってあげてね</p>}
     </div>
   )
 }
 
-function Stat({ label, value, color, icon }) {
+interface StatProps {
+  label: string
+  value: number
+  color: string
+  icon: string
+}
+
+function Stat({ label, value, color, icon }: StatProps) {
   const v = Math.round(value)
   return (
     <div className="stat">
       <div className="stat-head">
-        <span>{icon} {label}</span>
+        <span>
+          {icon} {label}
+        </span>
         <span>{v}</span>
       </div>
       <div className="bar">
