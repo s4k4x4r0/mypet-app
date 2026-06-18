@@ -25,6 +25,12 @@ const RATES = {
 
 const FEED_AMOUNT = 30
 
+/**
+ * Creates the initial pet state.
+ *
+ * @param now - The current timestamp used to initialize the `lastUpdated` field
+ * @returns A new pet state with full satiety and energy
+ */
 export function createInitialState(now: number): PetState {
   return {
     satiety: 80,
@@ -36,7 +42,13 @@ export function createInitialState(now: number): PetState {
 
 const clamp = (v: number): number => Math.max(0, Math.min(100, v))
 
-// 経過秒数ぶん状態を進める純粋関数（1秒刻みでシミュレート）
+/**
+ * Advances the pet's state based on elapsed seconds.
+ *
+ * @param state - The current pet state
+ * @param elapsedSec - The number of seconds elapsed
+ * @returns The updated pet state
+ */
 export function advance(state: PetState, elapsedSec: number): PetState {
   let { satiety, energy, asleep } = state
   // 異常に長い経過は丸める（最大48時間ぶんまで）
@@ -57,12 +69,21 @@ export function advance(state: PetState, elapsedSec: number): PetState {
   return { ...state, satiety, energy, asleep }
 }
 
+/**
+ * Feeds the pet, increasing its satiety if awake.
+ *
+ * @returns The pet state with satiety increased if awake, unchanged if asleep.
+ */
 export function feed(state: PetState): PetState {
   if (state.asleep) return state // 寝ている間はあげられない
   return { ...state, satiety: clamp(state.satiety + FEED_AMOUNT) }
 }
 
-// 状態から気分を判定
+/**
+ * Determines the pet's mood based on its current state.
+ *
+ * @returns `'sleeping'` if asleep; `'hungry'` if satiety is below 25; `'happy'` if satiety exceeds 75 and energy exceeds 50; `'normal'` otherwise.
+ */
 export function getMood(state: PetState): Mood {
   if (state.asleep) return 'sleeping'
   if (state.satiety < 25) return 'hungry'
@@ -70,6 +91,14 @@ export function getMood(state: PetState): Mood {
   return 'normal'
 }
 
+/**
+ * Loads the pet state from storage, advancing it to account for elapsed time.
+ *
+ * Falls back to a fresh initial state if the saved data is missing, invalid, or an error occurs.
+ *
+ * @param now - The current timestamp in milliseconds
+ * @returns The advanced pet state from storage, or a fresh initial state if loading fails
+ */
 export function loadState(now: number): PetState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
@@ -83,6 +112,9 @@ export function loadState(now: number): PetState {
   }
 }
 
+/**
+ * Persists the pet state to browser local storage.
+ */
 export function saveState(state: PetState): void {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state))

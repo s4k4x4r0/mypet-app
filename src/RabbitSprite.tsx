@@ -36,7 +36,13 @@ const BASE: string[] = [
 // [行, 列, 文字] の組
 type Edit = [number, number, string]
 
-// 行・列を指定して文字を差し替える
+/**
+ * Applies coordinate-based character edits to a grid of rows.
+ *
+ * @param rows - Array of strings representing the initial grid rows
+ * @param edits - Array of edits, where each edit specifies a row index, column index, and character to set
+ * @returns The modified grid as an array of strings
+ */
 function withPixels(rows: string[], edits: Edit[]): string[] {
   const grid = rows.map((r) => r.split(''))
   for (const [y, x, ch] of edits) grid[y][x] = ch
@@ -89,6 +95,13 @@ interface RabbitSpriteProps {
   pixel?: number
 }
 
+/**
+ * Renders a pixel-art rabbit sprite with the specified pose and pixel size.
+ *
+ * @param pose - The rabbit's facial expression. Defaults to `'normal'`.
+ * @param pixel - The width and height in pixels of each sprite pixel. Defaults to `14`.
+ * @returns The rendered sprite as a 16x16 grid of colored pixels.
+ */
 export default function RabbitSprite({
   pose = 'normal',
   pixel = 14,

@@ -10,6 +10,11 @@ import {
 } from './pet.ts'
 import './App.css'
 
+/**
+ * Displays a virtual pet interface with persistent state, time-based progression, and interactive feeding.
+ *
+ * @returns The rendered pet display with stats and controls.
+ */
 export default function App() {
   const [state, setState] = useState<PetState>(() => loadState(Date.now()))
   const [eating, setEating] = useState(false)
@@ -109,6 +114,9 @@ interface StatProps {
   icon: string
 }
 
+/**
+ * Displays a labeled numeric stat with a colored progress bar.
+ */
 function Stat({ label, value, color, icon }: StatProps) {
   const v = Math.round(value)
   return (
