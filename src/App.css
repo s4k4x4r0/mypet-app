@@ -1,0 +1,206 @@
+.app {
+  max-width: 380px;
+  margin: 0 auto;
+  padding: 24px 20px 40px;
+  text-align: center;
+}
+
+.title {
+  font-size: 28px;
+  margin: 8px 0 20px;
+  color: #ff7fa3;
+  letter-spacing: 2px;
+  text-shadow: 1px 1px 0 #fff, 2px 2px 0 #ffd6e2;
+}
+
+/* うさぎが立つステージ */
+.stage {
+  position: relative;
+  height: 280px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #d8f0ff 0%, #eafbff 60%, #d6f5e0 100%);
+  box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.04),
+    0 10px 24px rgba(255, 160, 190, 0.25);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.8s ease;
+}
+
+.stage.night {
+  background: linear-gradient(180deg, #3a3f6b 0%, #5b5f93 60%, #6d6fa0 100%);
+}
+
+.ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: radial-gradient(
+    120% 100% at 50% 100%,
+    #bdebc9 0%,
+    #a9e3ba 100%
+  );
+}
+
+.stage.night .ground {
+  background: radial-gradient(120% 100% at 50% 100%, #4a4d7a 0%, #3f426d 100%);
+}
+
+.rabbit {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 18px;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 6px 4px rgba(0, 0, 0, 0.12));
+}
+
+.bobbing {
+  animation: bob 2.4s ease-in-out infinite;
+}
+
+.breathing {
+  animation: breathe 3.2s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+.zzz {
+  position: absolute;
+  top: 40px;
+  right: 70px;
+  z-index: 3;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  opacity: 0.9;
+  animation: floatz 2.4s ease-in-out infinite;
+}
+
+@keyframes floatz {
+  0% {
+    transform: translateY(6px);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(-14px);
+    opacity: 0;
+  }
+}
+
+.carrot {
+  position: absolute;
+  z-index: 3;
+  bottom: 96px;
+  font-size: 30px;
+  animation: nom 1.2s ease-in-out;
+}
+
+@keyframes nom {
+  0% {
+    transform: translateY(-30px) scale(0.6);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(6px) scale(1);
+    opacity: 0;
+  }
+}
+
+.message {
+  min-height: 24px;
+  margin: 18px 0 16px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.stat {
+  text-align: left;
+}
+
+.stat-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.bar {
+  height: 16px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}
+
+.feed-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(180deg, #ff9bb5 0%, #ff7fa3 100%);
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 5px 0 #e96588, 0 8px 16px rgba(255, 127, 163, 0.35);
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.feed-btn:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #e96588, 0 3px 8px rgba(255, 127, 163, 0.35);
+}
+
+.feed-btn:disabled {
+  background: linear-gradient(180deg, #d6cfca 0%, #c4bcb6 100%);
+  box-shadow: 0 5px 0 #a89f98;
+  cursor: not-allowed;
+}
+
+.hint {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: #a08e80;
+}
