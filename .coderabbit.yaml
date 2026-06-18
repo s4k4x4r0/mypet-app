@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+reviews:
+  path_instructions:
+    - path: src/
+      instructions: Use explicit relative import extensions (`.js`, `.jsx`, `.css`) for all local imports.
+    - path: src/*.jsx
+      instructions: Define React components as function declarations with default exports; keep helper components module-private.
+    - path: src/main.jsx
+      instructions: "Keep this file as the minimal app bootstrap: import the global stylesheet, create the root with `createRoot`, and render `<App />` inside `<StrictMode>`."
+    - path: src/pet.js
+      instructions: Keep pet logic in pure, immutable helper functions that return new objects; expose functionality through named exports and keep module constants in uppercase.
+    - path: src/App.css
+      instructions: Place application UI styles, animations, and state-modifier selectors here; use flat semantic class names and class-combination state toggles.
+    - path: src/index.css
+      instructions: Limit this stylesheet to global reset and shell-level styles (`html`, `body`, `#root`, element selectors); do not add app-specific component rules.
+    - path: src/RabbitSprite.jsx
+      instructions: Keep the sprite component self-contained and prefer inline styles for sprite positioning and animation instead of adding new CSS selectors.
+    - path: index.html
+      instructions: Preserve the `<div id="root">` mount point and the `<script type="module" src="/src/main.jsx">` bootstrap entry.
+    - path: vite.config.js
+      instructions: Keep the Vite GitHub Pages base path set to `/mypet-app/`; do not change it unless the deployment subpath changes.
+    - path: .github/workflows/
+      instructions: "Keep the deployment workflow aligned with Vite defaults: build with `npm ci` and `npm run build`, upload `dist/`, and trigger deployments from `main` or manual dispatch only."
